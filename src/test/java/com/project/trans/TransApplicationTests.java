@@ -3,6 +3,7 @@ package com.project.trans;
 import com.baidu.aip.nlp.AipNlp;
 import com.project.trans.Bean.User;
 import com.project.trans.Mapper.Usermapper;
+import com.project.trans.Util.Trans;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.junit.Test;
@@ -23,14 +24,8 @@ public class TransApplicationTests {
 
     @Test
     public void contextLoads() {
-        try {
-            User u1 = new User(2,"李成献","958661134@qq.com","2222",2,null,"19:18");
-            System.out.println(usermapper.selectPower("韩昊天"));
-//            usermapper.insertUser(u1);
-            usermapper.updatePass(u1);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        Trans t = new Trans();
+        System.out.println(t.trans("你好"));
     }
 
     @Test

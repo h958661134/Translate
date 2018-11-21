@@ -6,13 +6,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="author" content="weibergmedia">
 <meta name="Description" content="Ridgewood – Responsive HTML5 Portfolio for Creatives" />
-<link href="css/reset.css" rel="stylesheet" type="text/css" media="screen" />
-<link href="css/bootstrap.min.css" rel="stylesheet">
-<link href="css/font-awesome.min.css" rel="stylesheet" type="text/css" />
-<link href="css/contact.css" rel="stylesheet" type="text/css" media="screen" />
-<link href="css/styles.css" rel="stylesheet" type="text/css" media="screen" />
-<link href="css/responsive.css" rel="stylesheet" type="text/css" media="screen" />
-<link rel="stylesheet" href="css/layui.css" type="text/css"  media="all">
+<link href="/trans/css/reset.css" rel="stylesheet" type="text/css" media="screen" />
+<link href="/trans/css/bootstrap.min.css" rel="stylesheet">
+<link href="/trans/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+<link href="/trans/css/contact.css" rel="stylesheet" type="text/css" media="screen" />
+<link href="/trans/css/styles.css" rel="stylesheet" type="text/css" media="screen" />
+<link href="/trans/css/responsive.css" rel="stylesheet" type="text/css" media="screen" />
+<link rel="stylesheet" href="/trans/css/layui.css" type="text/css"  media="all">
 <!--
 <link href="http://fonts.googleapis.com/css?family=Montserrat:400,600,700" rel="stylesheet" type="text/css" />
 <link href="http://fonts.googleapis.com/css?family=Lora:400,400italic,600" rel="stylesheet" type="text/css" />
@@ -91,7 +91,7 @@
     <hr>
     <h3 style="margin-left: 50px;font-family: '华文行楷';">翻译</h3>
     <hr>
-        <form class="layui-form layui-form-pane" action="">
+        <form class="layui-form layui-form-pane">
           <div class="layui-row">
             <div style="margin:0 50px;" class="layui-col-xs5">
                 <div class="layui-form-item layui-form-text">
@@ -101,7 +101,7 @@
                   <input type="button" style="float:right;" value="英文" id="give1" class="layui-btn layui-btn-primary">
                   </label>
                   <div class="layui-input-block" style="height:200px">
-                    <textarea style="border-radius: 20px;" placeholder="请输入内容" class="layui-textarea"></textarea>
+                    <textarea name="data1" style="border-radius: 20px;" placeholder="请输入内容" class="layui-textarea"></textarea>
                   </div>
                 </div>
             </div>
@@ -110,9 +110,10 @@
                 <div class="layui-form-item layui-form-text">
                 <label style="height: 50px;" class="layui-form-label">
                 <input type="button" value="中文" style="float:right;" id="give2" class="layui-btn layui-btn-primary">
+                  <a class="layui-btn" lay-submit lay-filter="trans">立即提交</a>
                 </label>
                   <div class="layui-input-block">
-                    <textarea style="background-color:#eae5e5;border-radius: 20px;" disabled="disabled" readonly="readonly" placeholder="" class="layui-textarea"></textarea>
+                    <textarea id="refunc1" style="background-color:#eae5e5;border-radius: 20px;" disabled="disabled" readonly="readonly" placeholder="" class="layui-textarea"></textarea>
                   </div>
                 </div>
             </div>
@@ -130,7 +131,7 @@
     <p class="alignright">Made with <i class="fa fa-heart"></i> by </p>
   </div>
 </footer>
-<script src="js/layui/layui.all.js" charset="utf-8"></script>
+<script src="layui/layui.js"></script>
 <script>
   function engl(n,m){
     var k1=document.getElementById(n).value;
@@ -178,13 +179,22 @@ layui.use(['form', 'layedit', 'laydate'], function(){
     layer.tips('温馨提示：请注意开关状态的文字可以随意定义，而不仅仅是ON|OFF', data.othis)
   });
 
-  //监听提交
-  form.on('submit(demo1)', function(data){
-    layer.alert(JSON.stringify(data.field), {
-      title: '最终的提交信息'
-    })
-    return false;
-  });
+    //监听提交
+    form.on('submit(trans)', function(data){
+        console.log(data)
+        alert($("#give1").val())
+        if($("#give1").val()==='中文') {
+            $.post('/trans/func1/trans', data.field, function (data) {
+                $('#refunc1').html(data)
+            })
+        }
+        if($("#give1").val()==='英文'){
+            $.post('/trans/func1/transeng', data.field, function (data) {
+                $('#refunc1').html(data)
+            })
+        }
+            return false;
+    });
 
   //表单初始赋值
   form.val('example', {
