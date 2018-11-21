@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.project.trans.Mapper.Usermapper">
+
+    <!-- 查找所有用户信息 -->
+    <select id="selectAllUser" resultType="com.project.trans.Bean.User">
+		select * from iwroid_user
+    </select>
+
+    <!-- 查找某用户密码 -->
+    <select id="selectpassWord" parameterType="java.lang.String" resultType="String">
+        select passWord from iwroid_user where userName=#{userName}
+    </select>
+
+    <!-- 查询账户权限 -->
+    <select id="selectPower" resultType="Integer">
+        select userPower from iwroid_user where userName=#{userName}
+    </select>
+    
+    <!-- 插入用户 -->
+    <insert id="insertUser" parameterType="com.project.trans.Bean.User">
+        insert into iwroid_user (
+        id,
+        userName,
+        userEmail,
+        passWord,
+        userPower,
+        userPhoto,
+        userTime
+        )
+        value (
+        #{user_id},
+        #{userName},
+        #{userEmail},
+        #{passWord},
+        #{userPower},
+        #{userPhoto},
+        #{userTime}
+        )
+    </insert>
+
+    <!-- 修改密码 -->
+    <update id="updatePass" parameterType="com.project.trans.Bean.User">
+        update iwroid_user set passWord=#{passWord} where userName=#{userName}
+    </update>
+
+</mapper>

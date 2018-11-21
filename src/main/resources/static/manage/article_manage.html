@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>文章管理</title>
+  <link rel="stylesheet" href="../layui/css/layui.css">
+  <script src="../layui/layui.js"></script>
+  <link rel="stylesheet" href="../css/basic.css">
+  <style>
+    .btn-wrap{
+      margin:5px 20px;
+    }
+    .btn-wrap>button{
+      float: right;
+      margin: 0 10px;
+    }
+  </style>
+</head>
+<body>
+
+
+  <div class="layui-col-sm8 layui-col-sm-offset2">
+  <form action="" class="bs-center layui-form">
+            <div class="layui-col-sm5 layui-form-item">
+                <label class="layui-form-label">文章名：</label>
+                <div class="layui-input-block">
+                <input type="text" name="userName" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-col-sm5">
+                <label class="layui-form-label">文章内容：</label>
+                <div class="layui-input-block">
+                <input type="text" name="userAccount" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-col-sm2">
+                <a id="searchIpt" class="layui-btn layui-btn-normal">搜索</a>
+            </div>
+        </form>
+    <div class="btn-wrap layui-clear">
+      <button id="addCounter" class="add-counter layui-btn">添加文章</button>
+    </div>
+    <table id="table" lay-filter="table"></table>
+  </div>
+
+</body>
+
+<!--添加柜员信息-->
+<form id="addNumber" class="layui-form bs-hidden fm-in" lay-filter="addNumber">
+  <div class="layui-form-item bs-hidden">
+      <label class="layui-form-label"> </label>
+      <div class="layui-input-block">
+          <input type="text" name="a1" class="layui-input">
+      </div>
+  </div>
+  <div class="layui-form-item">
+      <label class="layui-form-label">文章id：</label>
+      <div class="layui-input-block">
+      <input type="text" name="a2" required  lay-verify="required" placeholder="请输入文章id" autocomplete="off" class="layui-input">
+      </div>
+  </div>
+  <div class="layui-form-item">
+      <label class="layui-form-label">文章标题：</label>
+      <div class="layui-input-block">
+        <input type="text" name="a2" required  lay-verify="required" placeholder="请输入管理员名称" autocomplete="off" class="layui-input">
+      </div>
+  </div>
+  <div class="layui-form-item">
+      <label class="layui-form-label">作者：</label>
+      <div class="layui-input-block">
+        <input type="text" name="a2" required  lay-verify="required" placeholder="请输入文章作者" autocomplete="off" class="layui-input">
+      </div>
+  </div>
+  <div class="layui-form-item">
+    <label class="layui-form-label">发布时间：</label>
+    <div class="layui-input-block">
+      <input type="text" class="layui-input" id="Ctime" lay-filter="Ctime">
+    </div>
+</div>
+  <div class="layui-form-item">
+    <label class="layui-form-label">修改时间：</label>
+    <div class="layui-input-block">
+      <input type="text" class="layui-input" id="Ntime" lay-filter="Ctime">
+    </div>
+</div>
+<div class="layui-form-item">
+      <label class="layui-form-label">文章内容：</label>
+      <div class="layui-input-block">
+        <textarea name="a7" placeholder="请输入内容" class="layui-textarea"></textarea>
+      </div>
+  </div>
+
+  <div class="layui-form-item">
+          <div class="layui-input-block btn-center">
+              <button class="layui-btn" lay-submit lay-filter="pwd">提交</button>
+              <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+          </div>
+  </div>
+</form>
+
+
+
+
+<!-- 表格里的操作按钮 -->
+<script type="text/html" id="ipts">
+  <a lay-event="edit" class="layui-btn layui-btn-xs">编辑</a>
+  <a lay-event="del" class="layui-btn layui-btn-xs">删除</a>
+</script>
+
+
+<script>
+layui.use(['laydate','table', 'layer', 'jquery','form'], function () {
+  var laydate = layui.laydate;
+  var table = layui.table
+  var layer = layui.layer
+  var $ = layui.jquery
+  var form = layui.form;
+  var mydate = new Date()
+  var dataNow = mydate.toLocaleDateString()
+
+
+
+
+  var pageData = {
+    "tableData": [{
+        "id": 123456,
+        "title": "我家有儿李成仙",
+        "author": "12345678@qq.com",
+        "creatTime": "***",
+        "updateTime":1,
+        "content":"我有一句格言不知当讲不当讲",
+        "viewNumber":1
+      }
+    ]
+  }
+
+  //第一个实例
+  table.render({
+    id: 'tableImp',
+    elem: '#table',
+    page: true,//开启分页
+    cols: [
+        [ //表头
+          {
+            field: 'id',
+            title: 'id',
+            width: '20%',
+            sort: true,
+            fixed: 'left',
+            align: 'center'
+          }, {
+            field: 'title',
+            title: '文章标题',
+            width: '20%',
+            align: 'center'
+          }, {
+            field: 'author',
+            title: '作者',
+            width: '25%',
+            align: 'center',
+            sort: true
+          }, {
+            field: 'creatTime',
+            title: '创建时间',
+            width: '30%',
+            align: 'center'
+          },  {
+            field: 'updateTime',
+            title: '修改时间',
+            width: '10%',
+            align: 'center'
+          },{
+            field: 'content',
+            title: '文章内容',
+            width: '13%',
+            align: 'center'
+          },{
+            field: 'viewNumber',
+            title: '查看次数',
+            width: '13%',
+            align: 'center'
+          },{
+            fixed: 'right',
+            title: '操作',
+            align: 'center',
+            width: '13%',
+            toolbar: '#ipts'
+          }
+        ]
+      ]
+      //加载数据
+
+      ,
+    data: pageData.tableData
+  })
+
+  table.on('tool(table)',function (obj) {
+    var event = obj.event
+
+    if(event === 'edit') {
+      layer.open({
+        type: 1,
+        closeBtn: 1,
+        title: '修改社员信息',
+        content: $('#addNumber'),
+        area: ['800px', '600px'],
+
+        // success: function (layero, index) {
+        //   $(layero).find('form input').each(function () {
+        //     $(this).val(obj.data[$(this).attr('name')])
+        //   })
+        // },
+
+        // btn: ['确定', '取消'],
+        // yes: function (index, layero) {
+        //   //用新的数据重载表格
+        //   table.reload('tableImp', {
+        //     where: pageData.tableData
+        //   })
+        //   //清空表单里的值，并关闭表单
+        //   $(layero).find('form')[0].reset()
+        //   layer.close(index)
+        // },
+
+        // btn2: function (index, layero) {
+        //   $(layero).find('form')[0].reset()
+        //   layer.close(index)
+        // }
+
+
+      })
+    }
+    //删除
+    else if(event === 'del') {
+        layer.open({
+          type:1,
+          closeBtn: 0,
+          title:"提示信息",
+          content:"<span style='font-size:20px; margin-left:40px'>"+"真的要删除么？"+"</span>",
+          area:['200px','150px'],
+          btn:['确定','取消'],
+          btnAlign:'c',
+          yes:function(index, layero){
+            layer.msg('删除成功！');
+            layer.close(index);
+          },
+          btn2:function(index, layero){
+              layer.close(index);
+              return false;
+          }
+        })
+    }
+  })
+
+  //新增
+  $('#addCounter').click(function () {
+    layer.open({
+          title:'添加文章',
+          type:1,
+          content:$('#addNumber'),
+          area:['800px','600px'],
+      });
+  });
+
+  //监听提交
+  form.on('submit(pwd)', function(){
+  //  layer.msg(JSON.stringify(data.field));
+    return false;
+  });
+
+
+//执行一个laydate实例
+laydate.render({
+  elem: '#Ctime' //指定元素
+});
+
+})
+</script>
+</html>
+
