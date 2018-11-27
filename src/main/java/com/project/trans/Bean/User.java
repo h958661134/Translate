@@ -1,7 +1,7 @@
 package com.project.trans.Bean;
 
 public class User {
-    private int user_id;
+    private int id;
     private String userName;
     private String userEmail;
     private String passWord;
@@ -17,12 +17,12 @@ public class User {
         this.userPhoto = userPhoto;
     }
 
-    public int getUser_id() {
-        return user_id;
+    public int getId() {
+        return id;
     }
 
-    public void setUser_id(int user_id) {
-        this.user_id = user_id;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getUserName() {
@@ -65,8 +65,8 @@ public class User {
         this.userTime = userTime;
     }
 
-    public User(int user_id, String userName, String userEmail, String passWord, int userPower, String userPhoto, String userTime) {
-        this.user_id = user_id;
+    public User(int id, String userName, String userEmail, String passWord, int userPower, String userPhoto, String userTime) {
+        this.id = id;
         this.userName = userName;
         this.userEmail = userEmail;
         this.passWord = passWord;
@@ -75,10 +75,13 @@ public class User {
         this.userTime = userTime;
     }
 
+    public User() {
+    }
+
     @Override
     public String toString() {
         return "User{" +
-                "user_id=" + user_id +
+                "id=" + id +
                 ", userName='" + userName + '\'' +
                 ", userEmail='" + userEmail + '\'' +
                 ", passWord='" + passWord + '\'' +
@@ -86,8 +89,5 @@ public class User {
                 ", userPhoto='" + userPhoto + '\'' +
                 ", userTime='" + userTime + '\'' +
                 '}';
-    }
-
-    public User() {
     }
 }

@@ -28,14 +28,8 @@
                 <input type="text" name="userName" class="layui-input">
                 </div>
             </div>
-            <div class="layui-col-sm5">
-                <label class="layui-form-label">用户ID：</label>
-                <div class="layui-input-block">
-                <input type="text" name="userAccount" class="layui-input">
-                </div>
-            </div>
             <div class="layui-col-sm2">
-                <a id="searchIpt" class="layui-btn layui-btn-normal">搜索</a>
+                <a id="searchIpt" class="layui-btn layui-btn-normal" lay-submit lay-filter="search">搜索</a>
             </div>
         </form>
     <div class="btn-wrap layui-clear">
@@ -57,43 +51,43 @@
   <div class="layui-form-item">
       <label class="layui-form-label">用户id：</label>
       <div class="layui-input-block">
-      <input type="text" name="a2" required  lay-verify="required" placeholder="请输入用户id" autocomplete="off" class="layui-input">
+      <input readonly="readonly" name="id" type="text" name="a2" placeholder="用户id,禁止输入" class="layui-input">
       </div>
   </div>
   <div class="layui-form-item">
       <label class="layui-form-label">用户名：</label>
       <div class="layui-input-block">
-        <input type="text" name="a2" required  lay-verify="required" placeholder="请输入用户名称" autocomplete="off" class="layui-input">
+        <input name="userName" type="text" name="a2" required  lay-verify="required" placeholder="请输入用户名称" autocomplete="off" class="layui-input">
       </div>
   </div>
   <div class="layui-form-item">
       <label class="layui-form-label">邮箱：</label>
       <div class="layui-input-block">
-          <input type="text" name="a4" required  lay-verify="required" placeholder="请输入用户邮箱" autocomplete="off" class="layui-input">
+          <input name="userEmail" type="text" name="a4" required  lay-verify="required" placeholder="请输入用户邮箱" autocomplete="off" class="layui-input">
       </div>
   </div>
   <div class="layui-form-item">
       <label class="layui-form-label">密码：</label>
       <div class="layui-input-block">
-          <input type="text" name="a4" required  lay-verify="required" placeholder="请输入用户密码" autocomplete="off" class="layui-input">
+          <input name="passWord" type="text" name="a4" required  lay-verify="required" placeholder="请输入用户密码" autocomplete="off" class="layui-input">
       </div>
   </div>
   <div class="layui-form-item">
       <label class="layui-form-label">用户权限：</label>
       <div class="layui-input-block">
-          <input type="text" name="a4" required  lay-verify="required" placeholder="请设置用户权限" autocomplete="off" class="layui-input">
+          <input name="userPower" type="text" name="a4" required  lay-verify="required" placeholder="请设置用户权限" autocomplete="off" class="layui-input">
       </div>
   </div>
   <div class="layui-form-item">
     <label class="layui-form-label">用户创建时间：</label>
     <div class="layui-input-block">
-      <input type="text" class="layui-input" id="Ctime" lay-filter="Ctime">
+      <input name="userTime" type="text" class="layui-input" id="Ctime" lay-filter="Ctime">
     </div>
 </div>
   <div class="layui-form-item">
           <div class="layui-input-block btn-center">
-              <button class="layui-btn" lay-submit lay-filter="pwd">提交</button>
-              <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+              <a id="submit" class="layui-btn" lay-submit lay-filter="user">提交</a>
+              <a type="reset" class="layui-btn layui-btn-primary">重置</a>
           </div>
   </div>
 </form>
@@ -118,96 +112,75 @@ layui.use(['laydate','table', 'layer', 'jquery','form'], function () {
   var mydate = new Date()
   var dataNow = mydate.toLocaleDateString()
 
+    //搜索
+    form.on('submit(search)', function(data){
+        $.post("/trans/user/selectuser",data.field,function (data) {
+            showall(data)
+        },"json")
+        return false;
+    });
 
 
 
-  var pageData = {
-    "tableData": [{
-        "id": 123456,
-        "userName": "我家有儿李成仙",
-        "userEmail": "12345678@qq.com",
-        "passWord": "***",
-        "userPower":1,
-        "userTime":dataNow,
-      },{
-        "id": 123456,
-        "userName": "我家有儿李成仙",
-        "userEmail": "12345678@qq.com",
-        "passWord": "***",
-        "userPower":1,
-        "userTime":dataNow,
-      },{
-        "id": 123456,
-        "userName": "我家有儿李成仙",
-        "userEmail": "12345678@qq.com",
-        "passWord": "***",
-        "userPower":1,
-        "userTime":dataNow,
-      },{
-        "id": 123456,
-        "userName": "我家有儿李成仙",
-        "userEmail": "12345678@qq.com",
-        "passWord": "***",
-        "userPower":1,
-        "userTime":dataNow,
-      }
-    ]
-  }
+  //显示
+    $.post("/trans/user/selectall",function (data) {
+        showall(data)
+    },"json")
 
-  //第一个实例
-  table.render({
-    id: 'tableImp',
-    elem: '#table',
-    page: true,//开启分页
-    cols: [
-        [ //表头
-          {
-            field: 'id',
-            title: '用户id',
-            width: '10%',
-            sort: true,
-            fixed: 'left',
-            align: 'center'
-          }, {
-            field: 'userName',
-            title: '用户名',
-            width: '25%',
-            align: 'center'
-          }, {
-            field: 'userEmail',
-            title: '邮箱',
-            width: '25%',
-            align: 'center',
-            sort: true
-          }, {
-            field: 'passWord',
-            title: '密码',
-            width: '30%',
-            align: 'center'
-          },  {
-            field: 'userPower',
-            title: '用户权限',
-            width: '10%',
-            align: 'center'
-          },{
-            field: 'userTime',
-            title: '创建时间',
-            width: '13%',
-            align: 'center'
-          },{
-            fixed: 'right',
-            title: '操作',
-            align: 'center',
-            width: '13%',
-            toolbar: '#ipts'
-          }
-        ]
-      ]
-      //加载数据
+    function showall(data){
+          table.render({
+            id: 'tableImp',
+            elem: '#table',
+            page: true,//开启分页
+            cols: [
+                [ //表头
+                  {
+                    field: 'id',
+                    title: '用户id',
+                    width: '10%',
+                    sort: true,
+                    fixed: 'left',
+                    align: 'center'
+                  }, {
+                    field: 'userName',
+                    title: '用户名',
+                    width: '25%',
+                    align: 'center'
+                  }, {
+                    field: 'userEmail',
+                    title: '邮箱',
+                    width: '25%',
+                    align: 'center',
+                  }, {
+                    field: 'passWord',
+                    title: '密码',
+                    width: '30%',
+                    align: 'center'
+                  },  {
+                    field: 'userPower',
+                    title: '用户权限',
+                    width: '10%',
+                    align: 'center'
+                  },{
+                    field: 'userTime',
+                    title: '创建时间',
+                    width: '13%',
+                    align: 'center'
+                  },{
+                    fixed: 'right',
+                    title: '操作',
+                    align: 'center',
+                    width: '13%',
+                    toolbar: '#ipts'
+                  }
+                ]
+              ]
+              //加载数据
 
-      ,
-    data: pageData.tableData
-  })
+              ,
+            data: data
+          })
+    }
 
   table.on('tool(table)',function (obj) {
     var event = obj.event
@@ -216,31 +189,35 @@ layui.use(['laydate','table', 'layer', 'jquery','form'], function () {
       layer.open({
         type: 1,
         closeBtn: 1,
-        title: '修改社员信息',
+        title: '修改用户信息',
         content: $('#addNumber'),
         area: ['800px', '600px'],
 
-        // success: function (layero, index) {
-        //   $(layero).find('form input').each(function () {
-        //     $(this).val(obj.data[$(this).attr('name')])
-        //   })
-        // },
+        success: function (layero, index) {
+          $(layero).find('form input').each(function () {
+            $(this).val(obj.data[$(this).attr('name')])
+          })
+          $("#submit").attr("lay-filter","updateuser")
+            form.on('submit(updateuser)', function(data){
+                $.post("/trans/user/updateuser",data.field,function (data) {
+                    layer.close(index)
+                    window.location.reload();
+                })
+                return false;
+            });
+        },
 
-        // btn: ['确定', '取消'],
-        // yes: function (index, layero) {
-        //   //用新的数据重载表格
-        //   table.reload('tableImp', {
-        //     where: pageData.tableData
-        //   })
-        //   //清空表单里的值，并关闭表单
-        //   $(layero).find('form')[0].reset()
-        //   layer.close(index)
-        // },
+        btn: ['确定', '取消'],
+        yes: function (index, layero) {
+          //用新的数据重载表格
+          //清空表单里的值，并关闭表单
+          $(layero).find('form')[0].reset()
+        },
 
-        // btn2: function (index, layero) {
-        //   $(layero).find('form')[0].reset()
-        //   layer.close(index)
-        // }
+        btn2: function (index, layero) {
+          $(layero).find('form')[0].reset()
+          layer.close(index)
+        }
 
 
       })
@@ -258,6 +235,11 @@ layui.use(['laydate','table', 'layer', 'jquery','form'], function () {
           yes:function(index, layero){
             layer.msg('删除成功！');
             layer.close(index);
+              $.post("/trans/user/deluser", {
+                  id: obj.data['id']
+              }, function (e) {
+                  window.location.reload();
+              });
           },
           btn2:function(index, layero){
               layer.close(index);
@@ -278,8 +260,12 @@ layui.use(['laydate','table', 'layer', 'jquery','form'], function () {
   });
 
   //监听提交
-  form.on('submit(pwd)', function(){
-  //  layer.msg(JSON.stringify(data.field));
+  form.on('submit(user)', function(data){
+      $("#submit").attr("lay-filter","user")
+      $.post("/trans/user/insertuser",data.field,function (data) {
+          layer.closeAll();
+          window.location.reload();
+      })
     return false;
   });
 

@@ -30,7 +30,7 @@
         userTime
         )
         value (
-        #{user_id},
+        #{id},
         #{userName},
         #{userEmail},
         #{passWord},
@@ -45,4 +45,23 @@
         update iwroid_user set passWord=#{passWord} where userName=#{userName}
     </update>
 
+    <!--删除-->
+    <delete id="deluser">
+        delete from iwroid_user where id=#{id}
+    </delete>
+
+    <!--修改用户信息-->
+    <update id="updateuser">
+        update iwroid_user set
+        userName=#{userName},
+        userEmail=#{userEmail},
+        passWord=#{passWord},
+        userPower=#{userPower},
+        userTime=#{userTime}
+        where id=#{id}
+    </update>
+
+    <select id="selectuser" resultType="com.project.trans.Bean.User">
+        select * from iwroid_user where userName like concat('%',#{userName},'%')
+    </select>
 </mapper>

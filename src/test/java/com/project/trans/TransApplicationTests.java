@@ -14,6 +14,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 @RunWith(SpringRunner.class)
@@ -24,8 +25,10 @@ public class TransApplicationTests {
 
     @Test
     public void contextLoads() {
-        Trans t = new Trans();
-        System.out.println(t.trans("你好"));
+        List<User> l = usermapper.selectAllUser();
+        for (int i=0;i<l.size();i++){
+            System.out.println(l.get(i).toString());
+        }
     }
 
     @Test
