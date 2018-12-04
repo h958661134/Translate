@@ -51,31 +51,31 @@
   <div class="layui-form-item">
       <label class="layui-form-label">用户id：</label>
       <div class="layui-input-block">
-      <input readonly="readonly" name="id" type="text" name="a2" placeholder="用户id,禁止输入" class="layui-input">
+      <input id="id" readonly="readonly" name="id" type="text" placeholder="用户id,禁止输入" class="layui-input">
       </div>
   </div>
   <div class="layui-form-item">
       <label class="layui-form-label">用户名：</label>
       <div class="layui-input-block">
-        <input name="userName" type="text" name="a2" required  lay-verify="required" placeholder="请输入用户名称" autocomplete="off" class="layui-input">
+        <input id="userName" name="userName" type="text" required  lay-verify="required" placeholder="请输入用户名称" autocomplete="off" class="layui-input">
       </div>
   </div>
   <div class="layui-form-item">
       <label class="layui-form-label">邮箱：</label>
       <div class="layui-input-block">
-          <input name="userEmail" type="text" name="a4" required  lay-verify="required" placeholder="请输入用户邮箱" autocomplete="off" class="layui-input">
+          <input id="userEmail" name="userEmail" type="text" required  lay-verify="required" placeholder="请输入用户邮箱" autocomplete="off" class="layui-input">
       </div>
   </div>
   <div class="layui-form-item">
       <label class="layui-form-label">密码：</label>
       <div class="layui-input-block">
-          <input name="passWord" type="text" name="a4" required  lay-verify="required" placeholder="请输入用户密码" autocomplete="off" class="layui-input">
+          <input id="passWord" name="passWord" type="text" required  lay-verify="required" placeholder="请输入用户密码" autocomplete="off" class="layui-input">
       </div>
   </div>
   <div class="layui-form-item">
       <label class="layui-form-label">用户权限：</label>
       <div class="layui-input-block">
-          <input name="userPower" type="text" name="a4" required  lay-verify="required" placeholder="请设置用户权限" autocomplete="off" class="layui-input">
+          <input id="userPower" name="userPower" type="text" required  lay-verify="required" placeholder="请设置用户权限" autocomplete="off" class="layui-input">
       </div>
   </div>
   <div class="layui-form-item">
@@ -194,6 +194,7 @@ layui.use(['laydate','table', 'layer', 'jquery','form'], function () {
         area: ['800px', '600px'],
 
         success: function (layero, index) {
+            $("#id").attr("name","id");
           $(layero).find('form input').each(function () {
             $(this).val(obj.data[$(this).attr('name')])
           })
@@ -256,6 +257,13 @@ layui.use(['laydate','table', 'layer', 'jquery','form'], function () {
           type:1,
           content:$('#addNumber'),
           area:['800px','600px'],
+
+        success: function (layero, index) {
+            $(layero).find('form input').each(function () {
+                $(this).val("")
+            })
+            $("#id").attr("name","");
+        }
       });
   });
 
