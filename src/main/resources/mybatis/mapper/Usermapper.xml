@@ -64,4 +64,8 @@
     <select id="selectuser" resultType="com.project.trans.Bean.User">
         select * from iwroid_user where userName like concat('%',#{userName},'%')
     </select>
+
+    <select id="selectmanagerpassword" resultType="String">
+        select managePassword from iwroid_manage where manageName=#{manageName}
+    </select>
 </mapper>

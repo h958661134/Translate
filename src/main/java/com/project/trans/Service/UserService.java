@@ -10,4 +10,6 @@ public interface UserService {
     public void deluser(int id);
     public void updateuser(User user);
     public List<User> selectuser(String userName);
+    public String selectpassword(String userName);
+    public String selectmanagepass(String manageName);
 }

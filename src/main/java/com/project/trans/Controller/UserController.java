@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpSession;
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -60,5 +61,89 @@ public class UserController {
     public List<User> selectuser(String userName){
 //        System.out.println(userName);
         return userService.selectuser(userName);
+    }
+
+
+    /**
+     * 用户登录
+     * @param username
+     * @param password
+     * @param session
+     * @return
+     */
+    @RequestMapping("/user/login")
+    public boolean login(String username,String password,HttpSession session){
+        System.out.println(username);
+        if(userService.selectpassword(username)==null){
+            return false;
+        }
+        else if (userService.selectpassword(username).equals(password)){
+            session.setAttribute("username",username);
+            System.out.println(session.getAttribute("username"));
+            return true;
+        }
+        return false;
+    }
+
+    @RequestMapping("/user/managelogin")
+    public boolean managelogin(String username,String password,HttpSession session){
+        System.out.println(username);
+        if(userService.selectmanagepass(username)==null){
+            return false;
+        }
+        else if (userService.selectmanagepass(username).equals(password)){
+            session.setAttribute("manage",username);
+            System.out.println(session.getAttribute("manage"));
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * 注册
+     * @param user
+     */
+    @RequestMapping("/user/regist")
+    public boolean regist(User user){
+        Date date=new Date();
+        user.setUserPower(1);
+        user.setUserTime(date.toString());
+        if (userService.selectpassword(user.getUserName())==null){
+            userService.insertuser(user);
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+
+    /**
+     * 管理员退出
+     * @param session
+     */
+    @RequestMapping("/user/exit")
+    public void exit(HttpSession session){
+        session.invalidate();
+    }
+
+    /**
+     * 检测登录状态
+     * @param session
+     * @return
+     */
+    @RequestMapping("/user/manageislogin")
+    public boolean manageislogin(HttpSession session){
+        if (session.getAttribute("manage")==null){
+            return true;
+        }
+        return false;
+    }
+
+    @RequestMapping("/user/userislogin")
+    public boolean userislogin(HttpSession session){
+        if (session.getAttribute("username")==null){
+            return true;
+        }
+        return false;
     }
 }

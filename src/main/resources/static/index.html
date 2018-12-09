@@ -373,6 +373,13 @@
             }
         },"json")
 
+        $.post("/trans/user/userislogin",function (data) {
+            if (data) {
+                $(location).attr('href', 'login.html');
+                alert("请登录")
+            }
+        })
+
     })
 </script>
 <script src="js/jquery-1.12.4.min.js" type="text/javascript"></script>

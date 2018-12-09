@@ -49,4 +49,11 @@ public interface Usermapper {
      * @return
      */
     public List<User> selectuser(String userName);
+
+    /**
+     * 查找管理员密码，登陆用
+     * @param manageName
+     * @return
+     */
+    public String selectmanagerpassword(String manageName);
 }
