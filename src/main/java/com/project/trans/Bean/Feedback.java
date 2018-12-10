@@ -3,20 +3,9 @@ package com.project.trans.Bean;
 public class Feedback {
     private int id;
     private String feedbackContent;
-    private int userId;
-    private String isView;
+    private String userName;
     private String feedbackTime;
-
-    public Feedback(int id, String feedbackContent, int userId, String isView, String feedbackTime) {
-        this.id = id;
-        this.feedbackContent = feedbackContent;
-        this.userId = userId;
-        this.isView = isView;
-        this.feedbackTime = feedbackTime;
-    }
-
-    public Feedback() {
-    }
+    private String email;
 
     public int getId() {
         return id;
@@ -34,20 +23,12 @@ public class Feedback {
         this.feedbackContent = feedbackContent;
     }
 
-    public int getUserId() {
-        return userId;
+    public String getUserName() {
+        return userName;
     }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
-    }
-
-    public String getIsView() {
-        return isView;
-    }
-
-    public void setIsView(String isView) {
-        this.isView = isView;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     public String getFeedbackTime() {
@@ -58,14 +39,33 @@ public class Feedback {
         this.feedbackTime = feedbackTime;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public Feedback() {
+    }
+
+    public Feedback(int id, String feedbackContent, String userName, String feedbackTime, String email) {
+        this.id = id;
+        this.feedbackContent = feedbackContent;
+        this.userName = userName;
+        this.feedbackTime = feedbackTime;
+        this.email = email;
+    }
+
     @Override
     public String toString() {
         return "Feedback{" +
                 "id=" + id +
                 ", feedbackContent='" + feedbackContent + '\'' +
-                ", userId=" + userId +
-                ", isView='" + isView + '\'' +
+                ", userName='" + userName + '\'' +
                 ", feedbackTime='" + feedbackTime + '\'' +
+                ", email='" + email + '\'' +
                 '}';
     }
 }

@@ -1,5 +1,6 @@
 package com.project.trans.Mapper;
 
+import com.project.trans.Bean.Feedback;
 import com.project.trans.Bean.Manage;
 
 import java.util.List;
@@ -10,4 +11,6 @@ public interface indexSelectmapper {
      * @return
      */
     public List<Manage> selectManager();
+
+    public void userfeedback(Feedback feedback);
 }

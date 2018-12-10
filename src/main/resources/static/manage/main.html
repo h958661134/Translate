@@ -18,7 +18,7 @@
 
             <ul class="layui-nav layui-layout-left">
                 <li class="layui-nav-item">
-                    <a href="javascript:;">管理员：韩昊天</a>
+                    <a href="javascript:;">管理员：<b id="managename">韩昊天</b></a>
                 </li>
             </ul>
             <ul class="layui-nav layui-layout-right">
@@ -95,6 +95,11 @@
                 if (data) {
                     $(location).attr('href', '../login.html');
                     alert("请登录")
+                }
+                else {
+                    $.post("/trans/user/getsession",function (data) {
+                        $("#managename").html(data);
+                    })
                 }
             })
         })

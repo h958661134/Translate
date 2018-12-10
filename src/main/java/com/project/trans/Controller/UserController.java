@@ -127,7 +127,7 @@ public class UserController {
     }
 
     /**
-     * 检测登录状态
+     * 检测管理员登录状态
      * @param session
      * @return
      */
@@ -139,11 +139,26 @@ public class UserController {
         return false;
     }
 
+    /**
+     * 检测用户登录状态
+     * @param session
+     * @return
+     */
     @RequestMapping("/user/userislogin")
     public boolean userislogin(HttpSession session){
         if (session.getAttribute("username")==null){
             return true;
         }
         return false;
+    }
+
+    /**
+     * 查找session名
+     * @param session
+     * @return
+     */
+    @RequestMapping("/user/getsession")
+    public String getsession(HttpSession session){
+        return (String)session.getAttribute("manage");
     }
 }
