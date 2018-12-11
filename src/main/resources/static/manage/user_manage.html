@@ -120,7 +120,11 @@ layui.use(['laydate','table', 'layer', 'jquery','form'], function () {
         return false;
     });
 
-
+    $.post("/trans/user/manageislogin",function (data) {
+        if (data){
+            $(location).attr('href', '../login.html');
+        }
+    },"json")
 
   //显示
     $.post("/trans/user/selectall",function (data) {

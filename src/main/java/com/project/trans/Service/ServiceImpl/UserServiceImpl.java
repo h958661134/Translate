@@ -37,4 +37,14 @@ public class UserServiceImpl implements UserService {
     public List<User> selectuser(String userName) {
         return usermapper.selectuser(userName);
     }
+
+    @Override
+    public String selectpassword(String userName) {
+        return usermapper.selectpassWord(userName);
+    }
+
+    @Override
+    public String selectmanagepass(String manageName) {
+        return usermapper.selectmanagerpassword(manageName);
+    }
 }

@@ -18,21 +18,13 @@
 
             <ul class="layui-nav layui-layout-left">
                 <li class="layui-nav-item">
-                    <a href="javascript:;">管理员：韩昊天</a>
+                    <a href="javascript:;">管理员：<b id="managename">韩昊天</b></a>
                 </li>
             </ul>
             <ul class="layui-nav layui-layout-right">
-                <li class="layui-nav-item">
-                    <a href="javascript:;">设置</a>
-                    <dl class="layui-nav-child">
-                        <dd>
-                            <a href="">修改密码</a>
-                        </dd>
-                    </dl>
-                </li>
-                <li class="layui-nav-item">
-                    <a href="">退出</a>
-                </li>
+                    <li class="layui-nav-item">
+                        <div id="exit" class="exit">退出</div>
+                    </li>
             </ul>
         </div>
         <!-- 左侧导航栏 -->
@@ -78,11 +70,12 @@
 
     <script>
         //JavaScript代码区域
-        layui.use(['element','jquery'], function () {
+        layui.use(['element','jquery','form'], function () {
             var element = layui.element
             var $ = layui.jquery
+            var form = layui.form;
 
-            var $navs = $('.layui-nav>.layui-nav-item').find('a:not(".layui-nav-item-title")')
+            var $navs = $('.layui-nav>.layui-nav-item').find('a:not(".layui-nav-item-title .exit")')
             var $iframe = $('#iframe')
             $navs.click(function(event){
                 var href = $(this).attr('href')
@@ -91,6 +84,24 @@
                 event.preventDefault()
             })
 
+            $("#exit").click(function () {
+                $.post("/trans/user/exit",function () {
+                    $(location).attr('href', '../login.html');
+                })
+                return false;
+            })
+
+            $.post("/trans/user/manageislogin",function (data) {
+                if (data) {
+                    $(location).attr('href', '../login.html');
+                    alert("请登录")
+                }
+                else {
+                    $.post("/trans/user/getsession",function (data) {
+                        $("#managename").html(data);
+                    })
+                }
+            })
         })
 
     </script>
