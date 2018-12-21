@@ -1,6 +1,7 @@
 package com.project.trans.Controller;
 
 import com.project.trans.Bean.Feedback;
+import com.project.trans.Bean.Function;
 import com.project.trans.Bean.Manage;
 import com.project.trans.Service.indexService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,5 +27,15 @@ public class indexController {
         Date date = new Date();
         feedback.setFeedbackTime(date.toString());
         indexService.userfeedback(feedback);
+    }
+
+    @RequestMapping("/index/addtimes")
+    public void addtimes(int id){
+        indexService.addtime(id);
+    }
+
+    @RequestMapping("/index/selectdata")
+    public List<Function> selectdata(){
+        return indexService.selectdata();
     }
 }

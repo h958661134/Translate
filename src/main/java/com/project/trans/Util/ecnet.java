@@ -12,7 +12,7 @@ public class ecnet {
     public static final String API_KEY = "7ANhhaOxKwfH4opIKa1bEbj1";
     public static final String SECRET_KEY = "yx1D7tUmul8Gx5CU4kglPTqqUMmzBgz4";
 
-    public String depParser(String text) {
+    public String ecnet(String text) {
         // 初始化一个AipNlp
         AipNlp client = new AipNlp(APP_ID, API_KEY, SECRET_KEY);
 

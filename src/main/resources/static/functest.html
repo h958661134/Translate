@@ -2,7 +2,7 @@
 <html class="no-js" lang="en">
 <head>
 <meta charset="utf-8">
-<title>Ridgewood – Responsive HTML5 Multi-Concept Portfolio</title>
+<title>词法依存</title>
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="author" content="weibergmedia">
 <meta name="Description" content="Ridgewood – Responsive HTML5 Portfolio for Creatives" />
@@ -187,25 +187,12 @@ layui.use(['form', 'layedit', 'laydate','jquery'], function(){
 
   //监听提交
   form.on('submit(formDemo)', function(data){
-      console.log(data)
    $.post('/trans/func1/test',data.field,function (data) {
-      console.log(data)
        $('#refunc1').html(data)
+       $.post('/trans/index/addtimes',{id:1},function () {})
    })
     return false;
   });
-
-  //表单初始赋值
-  // form.val('example', {
-  //   "username": "贤心" // "name": "value"
-  //   ,"password": "123456"
-  //   ,"interest": 1
-  //   ,"like[write]": true //复选框选中状态
-  //   ,"close": true //开关状态
-  //   ,"sex": "女"
-  //   ,"desc": "我爱 layui"
-  // })
-
 
 });
 </script>

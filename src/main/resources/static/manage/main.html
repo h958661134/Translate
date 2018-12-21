@@ -40,7 +40,7 @@
                                 <a href="user_manage.html">用户管理</a>
                             </dd>
                             <dd>
-                                <a href="manage_mangage.html">管理员管理</a>
+                                <a id="super" href="manage_mangage.html">管理员管理</a>
                             </dd>
                             <dd>
                                 <a href="function_manage.html">功能管理</a>
@@ -102,6 +102,17 @@
                     })
                 }
             })
+
+            $.post("/trans/super/issupermanage",function (data) {
+                if (data){
+                    $("#super").attr('style','display:block');
+                }
+                else{
+                    $("#super").attr('style','display:none');
+                }
+            })
+
+
         })
 
     </script>

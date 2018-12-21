@@ -189,10 +189,9 @@ layui.use(['form', 'layedit', 'laydate','jquery'], function(){
 
   //监听提交
   form.on('submit(formDemo)', function(data){
-      console.log(data)
    $.post('/trans/func1/dnn',data.field,function (data) {
-      console.log(data)
        $('#refunc1').html(data)
+       $.post('/trans/index/addtimes',{id:4},function () {})
    })
     return false;
   });
