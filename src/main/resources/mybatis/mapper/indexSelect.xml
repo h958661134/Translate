@@ -21,4 +21,10 @@
         #{email}
         )
     </select>
+    <update id="updatefuncdata">
+        update iwroid_function set fView=fView+1 where id=#{id}
+    </update>
+    <select id="selectdata" resultType="com.project.trans.Bean.Function">
+        select * from iwroid_function order by fView desc
+    </select>
 </mapper>

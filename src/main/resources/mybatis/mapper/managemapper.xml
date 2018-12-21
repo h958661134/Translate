@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.project.trans.Mapper.managemapper">
+    <!--查找超级管理员-->
+    <select id="selectSuperManage" resultType="String">
+      select managePhoto from iwroid_manage where manageName=#{manageName}
+    </select>
+    <select id="selectSuperManagePassword" resultType="String">
+      select managePassword from iwroid_manage where manageName=#{manageName}
+    </select>
+
+    <!--查找管理员信息-->
+    <select id="selectAllManage" resultType="com.project.trans.Bean.Manage">
+        select * from iwroid_manage
+    </select>
+
+    <!--搜索-->
+    <select id="searchManage" resultType="com.project.trans.Bean.Manage">
+        select * from iwroid_manage where manageName like concat('%',#{manageName},'%')
+    </select>
+
+    <!--插入新管理员-->
+    <insert id="insertManage">
+        insert into iwroid_manage (id,manageName,manageEmail,managePassword,manageBlog,manageIntroduce,managePhoto)
+        values (#{id},#{manageName},#{manageEmail},#{managePassword},#{manageBlog},#{manageIntroduce},#{managePhoto})
+    </insert>
+
+    <!--删除管理员-->
+    <delete id="deleteManage">
+        delete from iwroid_manage where id=#{id}
+    </delete>
+
+    <!--修改管理员信息-->
+    <update id="updateManage" parameterType="com.project.trans.Bean.Manage">
+        update iwroid_manage
+        set
+        manageName=#{manageName},
+        manageEmail=#{manageEmail},
+        managePassword=#{managePassword},
+        manageBlog=#{manageBlog},
+        manageIntroduce=#{manageIntroduce},
+        managePhoto=#{managePhoto}
+        where id=#{id}
+    </update>
+</mapper>

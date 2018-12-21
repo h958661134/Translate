@@ -26,7 +26,7 @@ public class TransApplicationTests {
 
     @Test
     public void contextLoads() {
-        System.out.println(indexSelectmapper.selectManager().toString());
+        System.out.println(indexSelectmapper.selectdata().toString());
     }
 
     @Test
