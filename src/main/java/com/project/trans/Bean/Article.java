@@ -2,11 +2,29 @@ package com.project.trans.Bean;
 
 public class Article {
     private int id;
+    /**
+     * 文章标题
+     */
     private String tittle;
+    /**
+     * 文章内容
+     */
     private String content;
+    /**
+     * 作者
+     */
     private String author;
+    /**
+     * 创建时间
+     */
     private String creatTime;
+    /**
+     * 修改时间
+     */
     private String updateTime;
+    /**
+     * 浏览次数
+     */
     private int viewNumber;
 
     public int getId() {
