@@ -3,7 +3,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.project.trans.Mapper.Articlemapper">
     <!--查询文章信息-->
-    <select id="selectArticle" resultType="com.project.trans.Bean.Article">
+    <select id="selectArticles" resultType="com.project.trans.Bean.Article">
         select * from iwroid_article
     </select>
     <!--添加文章信息-->
@@ -19,4 +19,18 @@
     <delete id="deleteArticle">
         delete from iwroid_article where id=#{id}
     </delete>
+
+    <select id="selectArticleByCondition" resultType="com.project.trans.Bean.Article">
+        select *
+        from
+        iwroid_article
+        where
+        1=1
+        <if test="articleTitle != null and  articleTitle != ''">
+            and title like concat('%',#{articleTitle},'%')
+        </if>
+        <if test="articleAuthor != null and articleAuthor != ''">
+            and author like concat('%',#{articleAuthor},'%')
+        </if>
+    </select>
 </mapper>

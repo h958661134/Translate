@@ -8,7 +8,7 @@ public class Article {
     /**
      * 文章标题
      */
-    private String tittle;
+    private String title;
     /**
      * 文章内容
      */
@@ -20,7 +20,7 @@ public class Article {
     /**
      * 创建时间
      */
-    private String creatTime;
+    private String createTime;
     /**
      * 修改时间
      */
@@ -38,12 +38,12 @@ public class Article {
         this.id = id;
     }
 
-    public String getTittle() {
-        return tittle;
+    public String getTitle() {
+        return title;
     }
 
-    public void setTittle(String tittle) {
-        this.tittle = tittle;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public String getContent() {
@@ -62,12 +62,12 @@ public class Article {
         this.author = author;
     }
 
-    public String getCreatTime() {
-        return creatTime;
+    public String getCreateTime() {
+        return createTime;
     }
 
-    public void setCreatTime(String creatTime) {
-        this.creatTime = creatTime;
+    public void setCreateTime(String createTime) {
+        this.createTime = createTime;
     }
 
     public String getUpdateTime() {
@@ -90,10 +90,10 @@ public class Article {
     public String toString() {
         return "Article{" +
                 "id=" + id +
-                ", tittle='" + tittle + '\'' +
+                ", title='" + title + '\'' +
                 ", content='" + content + '\'' +
                 ", author='" + author + '\'' +
-                ", creatTime='" + creatTime + '\'' +
+                ", createTime='" + createTime + '\'' +
                 ", updateTime='" + updateTime + '\'' +
                 ", viewNumber=" + viewNumber +
                 '}';
@@ -102,12 +102,12 @@ public class Article {
     public Article() {
     }
 
-    public Article(int id, String tittle, String content, String author, String creatTime, String updateTime, int viewNumber) {
+    public Article(int id, String title, String content, String author, String createTime, String updateTime, int viewNumber) {
         this.id = id;
-        this.tittle = tittle;
+        this.title = title;
         this.content = content;
         this.author = author;
-        this.creatTime = creatTime;
+        this.createTime = createTime;
         this.updateTime = updateTime;
         this.viewNumber = viewNumber;
     }

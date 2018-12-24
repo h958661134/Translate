@@ -2,15 +2,19 @@ package com.project.trans.Controller;
 
 import com.project.trans.Bean.Article;
 import com.project.trans.Service.ArticleService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
+import javax.annotation.Resource;
 import java.util.Date;
 import java.util.List;
 
-@Controller
+@RestController
 public class ArticleController {
 
+    @Autowired
     private ArticleService articleService;
 
     /**
@@ -19,40 +23,43 @@ public class ArticleController {
      */
     @RequestMapping("/article/selectall")
    public List<Article> selectall(){
-       return articleService.selectArticles();
+       return articleService.selectarticles();
    }
     /**
      * 根据id删除文章信息
      * @param id
      */
-    @RequestMapping("/article/deleteArticle")
-    public void deleteArticle(int id)
+    @RequestMapping("/article/deletearticle")
+    public void deletearticle(int id)
     {
-        articleService.deleteArticle(id);
+        articleService.deletearticle(id);
     }
 
     /**
      * 更新文章信息
      * @param article
      */
-    @RequestMapping("/article/updateArticle")
-    public void updateArticle(Article article)
+    @RequestMapping("/article/updatearticle")
+    public void updatearticle(Article article)
     {
-        Date date=new Date();
-        article.setUpdateTime(date.toString());
-        articleService.updateArticle(article);
+        articleService.updatearticle(article);
     }
 
     /**
      * 插入文章信息
      * @param article
      */
-    @RequestMapping("/article/insertArticle")
-    public void insertArticle(Article article){
-        Date date=new Date();
-        article.setContent(date.toString());
-        article.setUpdateTime(date.toString());
+    @RequestMapping("/article/insertarticle")
+    public void insertarticle(Article article){
         article.setViewNumber(0);
-        articleService.insertArticle(article);
+        articleService.insertarticle(article);
+    }
+
+    /**
+     * 模糊查询文章信息
+     */
+    @RequestMapping("/article/selectarticlebycondition")
+    public List<Article> selectarticlebycondition(String articleTitle,String articleAuthor){
+        return articleService.selectarticlebycondition(articleTitle,articleAuthor);
     }
 }
