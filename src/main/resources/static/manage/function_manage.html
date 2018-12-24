@@ -63,17 +63,17 @@
             <div class="layui-col-sm5 layui-form-item">
                 <label class="layui-form-label">功能名：</label>
                 <div class="layui-input-block">
-                <input type="text" name="userName" class="layui-input">
+                <input type="text" name="fName" class="layui-input">
                 </div>
             </div>
             <div class="layui-col-sm5">
                 <label class="layui-form-label">功能ID：</label>
                 <div class="layui-input-block">
-                <input type="text" name="userAccount" class="layui-input">
+                <input type="text" name="id" class="layui-input">
                 </div>
             </div>
             <div class="layui-col-sm2">
-                <a id="searchIpt" class="layui-btn layui-btn-normal">搜索</a>
+                <a id="searchIpt" class="layui-btn layui-btn-normal" lay-submit lay-filter="search">搜索</a>
             </div>
         </form>
 
@@ -82,6 +82,39 @@
 
 </body>
 
+<!--添加柜员信息-->
+<form id="functionDetail" class="layui-form bs-hidden fm-in" lay-filter="functionDetail">
+    <div class="layui-form-item bs-hidden">
+        <label class="layui-form-label"> </label>
+        <div class="layui-input-block">
+            <input type="text" name="a1" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">功能id：</label>
+        <div class="layui-input-block">
+            <input id="id" readonly="readonly" name="id" type="text"  class="layui-input" disabled="disabled">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">功能名称：</label>
+        <div class="layui-input-block">
+            <input id="fName" name="fName" type="text" required  lay-verify="required" autocomplete="off" class="layui-input" disabled="disabled">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">功能介绍：</label>
+        <div class="layui-input-block">
+            <input id="fContent" name="fContent" type="text" required  lay-verify="required"  autocomplete="off" class="layui-input" disabled="disabled">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">该功能被访问次数：</label>
+        <div class="layui-input-block">
+            <input id="fView" name="fView" type="text" required  lay-verify="required"  autocomplete="off" class="layui-input" disabled="disabled">
+        </div>
+    </div>
+</form>
 
 
 <script type="text/html" id="ipts">
@@ -92,82 +125,100 @@
 
  layui.use(['laydate','form','jquery','layer','table'], function(){
   var laydate = layui.laydate;
-  var form = layui.form
-  var $ = layui.jquery
-  var layer = layui.layer
+  var form = layui.form;
+  var $ = layui.jquery;
+  var layer = layui.layer;
   var table = layui.table;
   //自定义验证规则
   form.verify({
     //为账号定义的验证添加规则
-  })
+  });
 
-  $("#iBtn").click(function(){
-      layer.open({
-          title:'社团信息修改',
-          type:1,
-          content:$('#partyInfo'),
-          area:['800px','600px'],
-      });
-  })
+     //搜索
+     form.on('submit(search)', function(data){
+         $.post("/trans/function/selectfunction",data.field,function (data) {
+             showall(data)
+         },"json");
+         return false;
+     });
+
+     $.post("/trans/function/selectall",function (data) {
+         showall(data)
+     },"json");
+
+     function showall(data){
+         table.render({
+                 elem: '#partyTable',
+                 page:true,
+                 cols: [
+                     [ //标题栏
+                         {
+                             field: 'id',
+                             title: '功能id',
+                             width: "15%",
+                             align:"center"
+
+                         }, {
+                         field: 'fName',
+                         title: '功能名称',
+                         width: "15%",
+                         align:"center"
+
+                     }, {
+                         field: 'fContent',
+                         title: '功能介绍',
+                         width: "48%",
+                         align:"center"
+                     }, {
+                         field: 'fView',
+                         title: '该功能被访问次数',
+                         width: "15%",
+                         align:"center"
+                     },{
+                         field: 'btn',
+                         title: '操作',
+                         width: "7%",
+                         align:"center",
+                         toolbar:"#ipts"
+                     }
+                     ]
+                 ]
+             //加载数据
+             ,
+             data: data
+         })
+     }
 
 
 
- table.render({
-    elem: '#partyTable',
-    cols: [
-        [ //标题栏
-            {
-                field: 'id',
-                title: '功能id',
-                width: "15%",
-                align:"center"
+     table.on('tool(partyTable)', function (obj) {
+         var event = obj.event;
 
-            }, {
-                field: 'fName',
-                title: '功能名称',
-                width: "15%",
-                align:"center"
+         if (event === 'detail') {
+             layer.open({
+                 type: 1,
+                 closeBtn: 1,
+                 title: '查看功能详情',
+                 content: $('#functionDetail'),
+                 area: ['1000px', '500px'],
 
-            }, {
-                field: 'fContent',
-                title: '功能介绍',
-                width: "48%",
-                align:"center"
-            }, {
-                field: 'fView',
-                title: '功能是否可查',
-                width: "15%",
-                align:"center"
-            },{
-                field: 'btn',
-                title: '操作',
-                width: "7%",
-                align:"center",
-                toolbar:"#ipts"
-            }
-        ]
-    ],
-    page: false,
-    data: [{
-            "id": "001",
-            "fName": "某功能",
-            "fContent": "某功能",
-            "fView": "是",
-        }]
-        //,skin: 'line' //表格风格
-        ,
+                 success: function (layero, index) {
+                     $("#id").attr("name", "id");
+                     $(layero).find('form input').each(function () {
+                         $(this).val(obj.data[$(this).attr('name')])
+                     })
+                 },
+
+                 btn: ['确定'],
+                 yes: function (index, layero) {
+                     $(layero).find('form')[0].reset()
+                     layer.close(index)
+                 }
+             })
+         }
+     });
+
 });
-
-
-    table.on('tool(partyTable)', function (obj) {
-        var event = obj.event;
-        var that = $(this);
-        if(event ==='detail'){
-                $("#itemAll").slideToggle();
-        }
-        });
-
-})
 
 </script>
 
