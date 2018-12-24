@@ -6,27 +6,26 @@ import java.util.List;
 
 public interface ArticleService {
     /**
-     * 根据条件查询信息
-     * @param condition
+     * 查询所有文章信息
      * @return
      */
-     public List<Article> selectArticles(String condition);
+    public List<Article> selectArticles();
 
     /**
      * 插入文章信息
      * @param article
      */
-     public void insertArticle(Article article);
+    public void insertArticle(Article article);
 
     /**
-     * 根据id删除信息
+     * 根据id删除文章信息
      * @param id
      */
-     public void deleteArticle(int id);
+    public void deleteArticle(int id);
 
     /**
      * 更新文章信息
      * @param article
      */
-     public void updateArticle(Article article);
- }
+    public void updateArticle(Article article);
+}

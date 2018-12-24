@@ -1,6 +1,9 @@
 package com.project.trans.Bean;
 
 public class Article {
+    /**
+     * 文章id
+     */
     private int id;
     /**
      * 文章标题

@@ -2,29 +2,25 @@ package com.project.trans.Controller;
 
 import com.project.trans.Bean.Article;
 import com.project.trans.Service.ArticleService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import javax.annotation.Resource;
 import java.util.Date;
 import java.util.List;
 
 @Controller
 public class ArticleController {
-    @Resource
+
     private ArticleService articleService;
 
     /**
-     * 根据条件查询
-     * @param condition
+     * 查询所有文章
      * @return
      */
-    @RequestMapping("/article/selectAll")
-    public List<Article> selectAll(String condition){
-        return articleService.selectArticles(condition);
-    }
-
+    @RequestMapping("/article/selectall")
+   public List<Article> selectall(){
+       return articleService.selectArticles();
+   }
     /**
      * 根据id删除文章信息
      * @param id

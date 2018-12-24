@@ -7,10 +7,9 @@ import java.util.List;
 public interface Articlemapper {
     /**
      * 查询文章
-     * @param condition 当根据条件查询的时候写入条件
      * @return
      */
-    public List<Article> selectArticles(String condition);
+    public List<Article> selectArticles();
 
     /**
      * 添加文章信息

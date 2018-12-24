@@ -5,12 +5,6 @@
     <!--查询文章信息-->
     <select id="selectArticle" resultType="com.project.trans.Bean.Article">
         select * from iwroid_article
-        where 1=1
-        <if test="conditon != null and condition != ''">
-            and ((title like CONCAT('%',#{name},'%')
-            or content like CONCAT('%',#{name},'%')
-            or author like CONCAT('%',#{name},'%'))
-        </if>
     </select>
     <!--添加文章信息-->
     <insert id="insertArticle" parameterType="com.project.trans.Bean.Article">
