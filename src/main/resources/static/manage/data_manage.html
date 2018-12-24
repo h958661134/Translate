@@ -56,14 +56,61 @@
 </head>
 <body>
 
-
   <div class="layui-container bs-center" >
+      <form action="" class="bs-center layui-form">
+        <div class="layui-col-sm5">
+          <label class="layui-form-label">功能ID：</label>
+          <div class="layui-input-block">
+            <input type="text" name="tId" class="layui-input">
+          </div>
+        </div>
+        <div class="layui-col-sm2">
+          <a id="searchIpt" class="layui-btn layui-btn-normal" lay-submit lay-filter="search">搜索</a>
+        </div>
+      </form>
         <table class="layui-table" id="partyTable" lay-filter="partyTable"></table>
   </div>
 
 </body>
 
-
+<form id="dataDetail" class="layui-form bs-hidden fm-in" lay-filter="dataDetail">
+  <div class="layui-form-item bs-hidden">
+    <label class="layui-form-label"> </label>
+    <div class="layui-input-block">
+      <input type="text" name="a1" class="layui-input">
+    </div>
+  </div>
+  <div class="layui-form-item">
+    <label class="layui-form-label">数据id：</label>
+    <div class="layui-input-block">
+      <input id="id" readonly="readonly" name="id" type="text"  class="layui-input" disabled="disabled">
+    </div>
+  </div>
+  <div class="layui-form-item">
+    <label class="layui-form-label">功能id：</label>
+    <div class="layui-input-block">
+      <input id="tId" name="tId" type="text" required  lay-verify="required" autocomplete="off" class="layui-input" disabled="disabled">
+    </div>
+  </div>
+  <div class="layui-form-item">
+    <label class="layui-form-label">功能内容：</label>
+    <div class="layui-input-block">
+      <input id="tContent" name="tContent" type="text" required  lay-verify="required"  autocomplete="off" class="layui-input" disabled="disabled">
+    </div>
+  </div>
+  <div class="layui-form-item">
+    <label class="layui-form-label">功能返回内容：</label>
+    <div class="layui-input-block">
+      <input id="tBack" name="tBack" type="text" required  lay-verify="required"  autocomplete="off" class="layui-input" disabled="disabled">
+    </div>
+  </div>
+  <div class="layui-form-item">
+    <label class="layui-form-label">时间：</label>
+    <div class="layui-input-block">
+      <input id="tTime" name="tTime" type="text" required  lay-verify="required"  autocomplete="off" class="layui-input" disabled="disabled">
+    </div>
+  </div>
+</form>
 
 
 <script type="text/html" id="ipts">
@@ -83,98 +130,97 @@
     //为账号定义的验证添加规则
   })
 
-  $("#iBtn").click(function(){
-      layer.open({
-          title:'数据修改',
-          type:1,
-          content:$('#partyInfo'),
-          area:['800px','600px'],
-      });
-  })
+
+     //搜索
+     form.on('submit(search)', function(data){
+         $.post("/trans/data/selectdata",data.field,function (data) {
+             showall(data)
+         },"json");
+         return false;
+     });
+
+     $.post("/trans/data/selectall",function (data) {
+         showall(data)
+     },"json");
+
+     function showall(data){
+         table.render({
+                 elem: '#partyTable',
+                 page:true,
+                 cols: [
+                     [ //标题栏
+                         {
+                             field: 'id',
+                             title: '数据ID',
+                             width: "15%",
+                             align:"center"
+
+                         }, {
+                         field: 'tId',
+                         title: '功能id',
+                         width: "15%",
+                         align:"center"
+
+                     }, {
+                         field: 'tContent',
+                         title: '功能内容',
+                         width: "30%",
+                         align:"center"
+                     }, {
+                         field: 'tBack',
+                         title: '功能返回内容',
+                         width: "30%",
+                         align:"center"
+                     }, {
+                         field: 'tTime',
+                         title: '时间',
+                         width: "10%",
+                         align:"center"
+                     },{
+                         field: 'btn',
+                         title: '操作',
+                         width: "7%",
+                         align:"center",
+                         toolbar:"#ipts"
+                     }
+                     ]
+                 ]
+             //加载数据
+             ,
+             data: data
+         })
+     }
 
 
 
- table.render({
-    elem: '#partyTable',
-    cols: [
-        [ //标题栏
-            {
-                field: 'id',
-                title: '数据ID',
-                width: "15%",
-                align:"center"
+     table.on('tool(partyTable)', function (obj) {
+         var event = obj.event;
 
-            }, {
-                field: 'tId',
-                title: '功能id',
-                width: "15%",
-                align:"center"
+         if (event === 'detail') {
+             layer.open({
+                 type: 1,
+                 closeBtn: 1,
+                 title: '查看功能详情',
+                 content: $('#dataDetail'),
+                 area: ['1000px', '500px'],
 
-            }, {
-                field: 'tContent',
-                title: '功能内容',
-                width: "30%",
-                align:"center"
-            }, {
-                field: 'tBack',
-                title: '功能返回内容',
-                width: "30%",
-                align:"center"
-            }, {
-                field: 'tTime',
-                title: '时间',
-                width: "10%",
-                align:"center"
-            },{
-                field: 'btn',
-                title: '操作',
-                width: "7%",
-                align:"center",
-                toolbar:"#ipts"
-            }
-        ]
-    ],
-    page: false,
-    data: [{
-            "PartyName": "孙大哈的社团",
-            "PartyId": "00001",
-            "PartyType": "党支部",
-            "PartyAddress": "软件学院",
-            "leader": "孙大哈",
-            "leaderPhone": "18212341234",
-            "peopleCount": 1000,
-        },{
-            "PartyName": "孙二哈的社团",
-            "PartyId": "00001",
-            "PartyType": "党支部",
-            "PartyAddress": "软件学院",
-            "leader": "孙二哈",
-            "leaderPhone": "18212341234",
-            "peopleCount": 1000,
-        },{
-            "PartyName": "孙三哈的社团",
-            "PartyId": "00001",
-            "PartyType": "党支部",
-            "PartyAddress": "软件学院",
-            "leader": "孙三哈",
-            "leaderPhone": "18212341234",
-            "peopleCount": 1000,
-        }
-        ]
-        //,skin: 'line' //表格风格
-        ,
-});
+                 success: function (layero, index) {
+                     $("#id").attr("name", "id");
+                     $(layero).find('form input').each(function () {
+                         $(this).val(obj.data[$(this).attr('name')])
+                     })
+                 },
 
+                 btn: ['确定'],
+                 yes: function (index, layero) {
+                     $(layero).find('form')[0].reset()
+                     layer.close(index)
+                 }
+             })
+         }
+     });
 
-    table.on('tool(partyTable)', function (obj) {
-        var event = obj.event;
-        var that = $(this);
-        if(event ==='detail'){
-                $("#itemAll").slideToggle();
-        }
-        });
-
-})
+ });
 
 </script>
 
