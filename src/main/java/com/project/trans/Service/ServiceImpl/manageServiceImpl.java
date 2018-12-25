@@ -6,11 +6,12 @@ import com.project.trans.Service.manageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.List;
 
 @Service
 public class manageServiceImpl implements manageService {
-    @Autowired
+    @Resource
     private managemapper managemapper;
 
     @Override

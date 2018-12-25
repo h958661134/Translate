@@ -132,58 +132,58 @@ layui.use(['laydate','table', 'layer', 'jquery','form'], function () {
     },"json")
 
     function showall(data){
-          table.render({
+        table.render({
             id: 'tableImp',
             elem: '#table',
             page: true,//开启分页
             cols: [
                 [ //表头
-                  {
-                    field: 'id',
-                    title: '用户id',
-                    width: '10%',
-                    sort: true,
-                    fixed: 'left',
-                    align: 'center'
-                  }, {
+                    {
+                        field: 'id',
+                        title: '用户id',
+                        width: '10%',
+                        sort: true,
+                        fixed: 'left',
+                        align: 'center'
+                    }, {
                     field: 'userName',
                     title: '用户名',
                     width: '25%',
                     align: 'center'
-                  }, {
+                }, {
                     field: 'userEmail',
                     title: '邮箱',
                     width: '25%',
                     align: 'center',
-                  }, {
+                }, {
                     field: 'passWord',
                     title: '密码',
                     width: '30%',
                     align: 'center'
-                  },  {
+                },  {
                     field: 'userPower',
                     title: '用户权限',
                     width: '10%',
                     align: 'center'
-                  },{
+                },{
                     field: 'userTime',
                     title: '创建时间',
                     width: '13%',
                     align: 'center'
-                  },{
+                },{
                     fixed: 'right',
                     title: '操作',
                     align: 'center',
                     width: '13%',
                     toolbar: '#ipts'
-                  }
+                }
                 ]
-              ]
-              //加载数据
+            ]
+            //加载数据
 
-              ,
+            ,
             data: data
-          })
+        })
     }
 
   table.on('tool(table)',function (obj) {

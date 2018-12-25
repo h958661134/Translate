@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.project.trans.Mapper.Functionmapper">
+
+    <!-- 查找所有用户信息 -->
+    <select id="selectAllFunction" resultType="com.project.trans.Bean.Function">
+		select * from iwroid_function
+    </select>
+
+
+    <select id="selectfunction" resultType="com.project.trans.Bean.Function">
+        select *
+        from
+        iwroid_function
+        where
+        1=1
+        <if test="fName != null and fName != ''">
+            and  fName like concat('%',#{fName},'%')
+        </if>
+        <if test="id != null and id != ''">
+            and id = #{id}
+        </if>
+    </select>
+
+</mapper>

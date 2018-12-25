@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.project.trans.Mapper.Datamapper">
+
+    <!-- 查找所有用户信息 -->
+    <select id="selectAllData" resultType="com.project.trans.Bean.Data">
+		select * from iwroid_data
+    </select>
+
+
+    <select id="selectdata" resultType="com.project.trans.Bean.Data">
+        select *
+        from
+        iwroid_data
+        where
+        1=1
+        <if test="tId != null and tId != ''">
+            and  tId = #{tId}
+        </if>
+    </select>
+
+</mapper>
