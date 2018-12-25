@@ -1,8 +1,10 @@
 package com.project.trans.Controller;
 
+import com.project.trans.Bean.Data;
 import com.project.trans.Bean.Feedback;
 import com.project.trans.Bean.Function;
 import com.project.trans.Bean.Manage;
+import com.project.trans.Service.DataService;
 import com.project.trans.Service.indexService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,6 +18,8 @@ import java.util.List;
 public class indexController {
     @Autowired
     private indexService indexService;
+    @Autowired
+    private DataService dataService;
 
     @RequestMapping("/index/indexselectmanage")
     public List<Manage> selectmanage(){
@@ -37,5 +41,12 @@ public class indexController {
     @RequestMapping("/index/selectdata")
     public List<Function> selectdata(){
         return indexService.selectdata();
+    }
+
+    @RequestMapping("/index/insertdata")
+    public void insertdata(Data data){
+        Date date=new Date();
+        data.settTime(date.toString());
+        dataService.insertdata(data);
     }
 }

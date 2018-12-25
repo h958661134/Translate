@@ -26,4 +26,9 @@ public class DataServiceImpl implements DataService {
     {
         return datamapper.selectdata(tId);
     }
+
+    @Override
+    public void insertdata(Data data) {
+        datamapper.insertdata(data);
+    }
 }

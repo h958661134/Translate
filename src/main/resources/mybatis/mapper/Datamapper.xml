@@ -20,4 +20,16 @@
         </if>
     </select>
 
+    <insert id="insertdata" parameterType="com.project.trans.Bean.Data">
+        insert into iwroid_data
+        (id,tId,tContent,tBack,tTime)
+        value(
+        #{id},
+        #{tId},
+        #{tContent},
+        #{tBack},
+        #{tTime}
+        )
+    </insert>
+
 </mapper>

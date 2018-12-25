@@ -193,6 +193,7 @@ layui.use(['form', 'layedit', 'laydate','jquery'], function(){
    $.post('/trans/func1/topic',data.field,function (data) {
        $('#refunc1').html(data)
        $.post('/trans/index/addtimes',{id:7},function () {})
+       $.post('/trans/index/insertdata',{tId:7,tContent:$("textarea[name='data1']").val(),tBack:$('#refunc1').html()},function () {})
    })
     return false;
   });

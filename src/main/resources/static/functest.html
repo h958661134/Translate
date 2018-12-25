@@ -190,6 +190,7 @@ layui.use(['form', 'layedit', 'laydate','jquery'], function(){
    $.post('/trans/func1/test',data.field,function (data) {
        $('#refunc1').html(data)
        $.post('/trans/index/addtimes',{id:1},function () {})
+       $.post('/trans/index/insertdata',{tId:1,tContent:$("textarea[name='data1']").val(),tBack:$('#refunc1').html()},function () {})
    })
     return false;
   });

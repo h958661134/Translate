@@ -19,4 +19,10 @@ public interface Datamapper {
      * @return
      */
     public List<Data> selectdata(@Param("tId") Integer tId);
+
+    /**
+     * 插入数据
+     * @param data
+     */
+    public void insertdata(Data data);
 }
