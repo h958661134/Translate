@@ -197,6 +197,7 @@ layui.use(['form', 'layedit', 'laydate'], function(){
             })
         }
         $.post('/trans/index/addtimes',{id:9},function () {})
+        $.post('/trans/index/insertdata',{tId:9,tContent:$("textarea[name='data1']").val(),tBack:$('#refunc1').html()},function () {})
             return false;
     });
 

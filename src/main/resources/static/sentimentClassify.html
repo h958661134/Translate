@@ -192,6 +192,7 @@ layui.use(['form', 'layedit', 'laydate','jquery'], function(){
    $.post('/trans/func1/sentimentClassify',data.field,function (data) {
        $('#refunc1').html(data)
        $.post('/trans/index/addtimes',{id:5},function () {})
+       $.post('/trans/index/insertdata',{tId:5,tContent:$("textarea[name='data1']").val(),tBack:$('#refunc1').html()},function () {})
    })
     return false;
   });

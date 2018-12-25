@@ -191,8 +191,9 @@ layui.use(['form', 'layedit', 'laydate','jquery'], function(){
   //监听提交
   form.on('submit(formDemo)', function(data){
    $.post('/trans/func1/keyword',data.field,function (data) {
-       $('#refunc1').html(data)
+       var re=$('#refunc1').html(data)
        $.post('/trans/index/addtimes',{id:6},function () {})
+       $.post('/trans/index/insertdata',{tId:6,tContent:$("textarea[name='data1']").val(),tBack:$('#refunc1').html()},function () {})
    })
     return false;
   });

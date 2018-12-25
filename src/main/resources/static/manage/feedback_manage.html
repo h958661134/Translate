@@ -61,7 +61,7 @@
 
         <form action="" class="bs-center layui-form">
             <div class="layui-col-sm5 layui-form-item">
-                <label class="layui-form-label">用户ID：</label>
+                <label class="layui-form-label">用户名：</label>
                 <div class="layui-input-block">
                 <input type="text" name="userName" class="layui-input">
                 </div>
@@ -69,16 +69,53 @@
             <div class="layui-col-sm5">
                 <label class="layui-form-label">反馈内容：</label>
                 <div class="layui-input-block">
-                <input type="text" name="userAccount" class="layui-input">
+                <input type="text" name="feedbackContent" class="layui-input">
                 </div>
             </div>
             <div class="layui-col-sm2">
-                <a id="searchIpt" class="layui-btn layui-btn-normal">搜索</a>
+                <a id="searchIpt" class="layui-btn layui-btn-normal" lay-submit lay-filter="search">搜索</a>
             </div>
         </form>
 
-        <table class="layui-table" id="partyTable" lay-filter="partyTable"></table>
+        <table class="layui-table" id="feedbackTable" lay-filter="feedbackTable"></table>
   </div>
+  
+  <!-- 显示反馈详情 -->
+
+  <div id="feedbackInfo" class="layui-form bs-hidden fm-in" lay-filter="feedbackInfo">
+ 	<div class="layui-form-item">
+      <label class="layui-form-label">反馈id：</label>
+      <div>
+      	<p id="id" name="id"></p>
+      </div>
+  	</div>
+  	<div class="layui-form-item">
+      <label class="layui-form-label">用户名：</label>
+      <div>
+      	<p id="userName" name="userName"></p>
+      </div>
+  	</div>
+  	<div class="layui-form-item">
+      <label class="layui-form-label">反馈时间：</label>
+      <div>
+      	<p id="feedbackTime" name="feedbackTime"></p>
+      </div>
+  	</div>
+  	<div class="layui-form-item">
+      <label class="layui-form-label">用户邮箱：</label>
+      <div>
+      	<p id="email" name="email"></p>
+      </div>
+  	</div>
+  	<div class="layui-form-item">
+      <label class="layui-form-label">反馈内容：</label>
+      <div>
+      	<p id="feedbackcontent" name="feedbackcontent"></p>
+      </div>
+  	</div>
+  </div>
+
+  
 
 </body>
 
@@ -95,77 +132,86 @@
   var $ = layui.jquery
   var layer = layui.layer
   var table = layui.table;
-  //自定义验证规则
-  form.verify({
-    //为账号定义的验证添加规则
-  })
+ 
+  
+  form.on('submit(search)',function(data){
+      console.log(data)
+	  $.post("/trans/feedback/search",data.field,function(data){
+		  showAll(data)
+	  },"json")
+	  return false;
+  });
+  
+  $.post("/trans/feedback/selectAllFeedback",function(data){
+	  showAll(data)
+  },"json")
+  
+  function showAll(data){
+	  table.render({
+			id: 'feedbackTableImp',
+		    elem: '#feedbackTable',
+		    cols: [
+		        [ //标题栏
+		            {
+		                field: 'id',
+		                title: '反馈id',
+		                width: "15%",
+		                align:"center"
 
-  $("#iBtn").click(function(){
-      layer.open({
-          title:'社团信息修改',
-          type:1,
-          content:$('#partyInfo'),
-          area:['800px','600px'],
-      });
-  })
+		            }, {
+		                field: 'feedbackContent',
+		                title: '反馈内容',
+		                width: "33%",
+		                align:"center"
 
+		            }, {
+		                field: 'userName',
+		                title: '用户名',
+		                width: "15%",
+		                align:"center"
+		            }, {
+		                field: 'feedbackTime',
+		                title: '反馈时间',
+		                width: "15%",
+		                align:"center"
+		            }, {
+		                field: 'email',
+		                title: '邮箱',
+		                width: "15%",
+		                align:"center"
+		            },{
+		                field: 'btn',
+		                title: '操作',
+		                width: "7%",
+		                align:"center",
+		                toolbar:"#ipts"
+		            }
+		        ]
+		    ],
+		    page: false,
+		    data: data
+		        
+		})
+  }
 
-
- table.render({
-    elem: '#partyTable',
-    cols: [
-        [ //标题栏
-            {
-                field: 'id',
-                title: '反馈id',
-                width: "15%",
-                align:"center"
-
-            }, {
-                field: 'feedbackContent',
-                title: '反馈内容',
-                width: "48%",
-                align:"center"
-
-            }, {
-                field: 'userId',
-                title: '用户id',
-                width: "15%",
-                align:"center"
-            }, {
-                field: 'isView',
-                title: '是否查看',
-                width: "15%",
-                align:"center"
-            },{
-                field: 'btn',
-                title: '操作',
-                width: "7%",
-                align:"center",
-                toolbar:"#ipts"
-            }
-        ]
-    ],
-    page: false,
-    data: [{
-            "id": "111",
-            "feedbackContent": "00001",
-            "userId": "222",
-            "isView": "是",
-        }
-        ]
-        //,skin: 'line' //表格风格
-        ,
-});
-
-
-    table.on('tool(partyTable)', function (obj) {
+    table.on('tool(feedbackTable)', function (obj) {
         var event = obj.event;
-        var that = $(this);
+        
         if(event ==='detail'){
-                $("#itemAll").slideToggle();
+        	layer.open({
+        		type:1,
+        		closeBtn:1,
+        		title:'反馈详情',
+        		content:$('#feedbackInfo'),
+        		area:['800px','600px'],
+        		success: function(layero,index){
+        			$(layero).find('p').each(function(){
+        				$(this).html(obj.data[$(this).attr('name')])
+        			})
+        		}
+        	})
         }
-        });
+    });
 
 })
 
