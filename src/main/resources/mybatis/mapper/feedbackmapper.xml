@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.project.trans.Mapper.feedbackmapper">
+
+	<select id="selectAllFeedback" resultType="com.project.trans.Bean.Feedback">
+		select * from iwroid_feedback
+	</select>
+	
+	<select id="selectFeedbackByUsernameAndContent" resultType="com.project.trans.Bean.Feedback">
+		select * from iwroid_feedback 
+		where userName like concat('%',#{userName},'%')
+		or feedbackContent like concat('%',#{feedbackContent},'%')
+	</select>
+	
+	<select id="selectFeedbackById" resultType="com.project.trans.Bean.Feedback">
+		select * from iwroid_feedback 
+		where id=#{id}
+	</select>
+
+</mapper>
